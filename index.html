@@ -61,44 +61,41 @@
         <section id="tarefas" class="panel" aria-labelledby="tasks-title">
           <div class="panel-heading">
             <div><p class="eyebrow">MANTENHA O RITMO</p><h2 id="tasks-title">Minhas tarefas</h2></div>
-            <span class="count-badge">4 abertas</span>
+            <span class="count-badge" id="task-count">0 abertas</span>
           </div>
-          <ul class="task-list">
-            <li class="task-row"><span class="task-check" aria-hidden="true"></span><span class="task-copy"><strong>Lista de álgebra</strong><small>Matemática · Capítulo 5</small></span><span class="priority priority-high">Alta</span><time datetime="2026-10-01">Hoje</time></li>
-            <li class="task-row"><span class="task-check" aria-hidden="true"></span><span class="task-copy"><strong>Pesquisa para ciências</strong><small>Biologia · Pesquisa e fontes</small></span><span class="priority priority-medium">Média</span><time datetime="2026-10-02">Amanhã</time></li>
-            <li class="task-row"><span class="task-check" aria-hidden="true"></span><span class="task-copy"><strong>Leitura: História moderna</strong><small>História · Capítulo 3</small></span><span class="priority priority-medium">Média</span><time datetime="2026-10-04">04 out</time></li>
-            <li class="task-row"><span class="task-check" aria-hidden="true"></span><span class="task-copy"><strong>Revisar vocabulário</strong><small>Inglês · Unidade 2</small></span><span class="priority priority-low">Baixa</span><time datetime="2026-10-05">05 out</time></li>
-          </ul>
+          <form class="task-form" id="task-form" aria-label="Adicionar tarefa">
+            <input id="task-title" name="title" placeholder="Nova tarefa" aria-label="Título da tarefa" required maxlength="100">
+            <input id="task-details" name="details" placeholder="Matéria ou detalhes" aria-label="Matéria ou detalhes" maxlength="120">
+            <input id="task-due" name="due" type="date" aria-label="Prazo">
+            <select id="task-priority" name="priority" aria-label="Prioridade">
+              <option value="high">Alta</option><option value="medium" selected>Média</option><option value="low">Baixa</option>
+            </select>
+            <button class="primary-button" type="submit">Adicionar</button>
+          </form>
+          <div class="task-filters" aria-label="Filtros de tarefas">
+            <label>Exibir <select id="task-status-filter" aria-label="Filtrar por situação"><option value="open">Abertas</option><option value="all">Todas</option><option value="completed">Concluídas</option></select></label>
+            <label>Prioridade <select id="task-priority-filter" aria-label="Filtrar por prioridade"><option value="all">Todas</option><option value="high">Alta</option><option value="medium">Média</option><option value="low">Baixa</option></select></label>
+          </div>
+          <ul class="task-list" id="task-list" aria-live="polite"></ul>
           <a class="text-link" href="#tarefas">Ver todas as tarefas <span aria-hidden="true">→</span></a>
         </section>
 
         <section id="agenda" class="panel" aria-labelledby="calendar-title">
           <div class="panel-heading calendar-heading">
             <div><p class="eyebrow">PLANEJE SEU DIA</p><h2 id="calendar-title">Agenda da semana</h2></div>
-            <span class="month-label">Outubro 2026 <span aria-hidden="true">⌄</span></span>
+            <div class="calendar-controls"><button class="icon-button" id="previous-week" type="button" aria-label="Semana anterior" title="Semana anterior">‹</button><span class="month-label" id="month-label"></span><button class="icon-button" id="next-week" type="button" aria-label="Próxima semana" title="Próxima semana">›</button></div>
           </div>
-          <div class="week-strip" aria-label="Semana de 28 de setembro a 4 de outubro">
-            <div class="day-cell"><span>Seg</span><strong>28</strong></div><div class="day-cell"><span>Ter</span><strong>29</strong></div><div class="day-cell"><span>Qua</span><strong>30</strong></div><div class="day-cell is-today"><span>Qui</span><strong>01</strong></div><div class="day-cell"><span>Sex</span><strong>02</strong></div><div class="day-cell"><span>Sáb</span><strong>03</strong></div><div class="day-cell"><span>Dom</span><strong>04</strong></div>
-          </div>
-          <div class="schedule" aria-label="Compromissos de hoje">
-            <div class="schedule-row"><time>09:00</time><span class="event-dot blue-dot"></span><div class="event event-blue"><strong>Aula de matemática</strong><small>09:00 - 10:00 · Sala 204</small></div></div>
-            <div class="schedule-row"><time>10:30</time><span class="event-dot green-dot"></span><div class="event event-green"><strong>Sessão de estudos</strong><small>10:30 - 11:30 · Biblioteca</small></div></div>
-            <div class="schedule-row"><time>12:00</time><span class="event-dot yellow-dot"></span><div class="event event-yellow"><strong>Pausa para almoço</strong><small>12:00 - 13:00</small></div></div>
-            <div class="schedule-row"><time>14:00</time><span class="event-dot blue-dot"></span><div class="event event-blue"><strong>Projeto de ciências</strong><small>14:00 - 15:30 · Laboratório</small></div></div>
-          </div>
+          <div class="week-strip" id="week-strip" aria-label="Dias da semana"></div>
+          <div class="schedule" id="schedule" aria-live="polite"></div>
           <a class="text-link" href="#agenda">Abrir calendario <span aria-hidden="true">→</span></a>
         </section>
 
         <section id="notas" class="panel" aria-labelledby="notes-title">
           <div class="panel-heading">
             <div><p class="eyebrow">ANOTE ANTES QUE ESQUEÇA</p><h2 id="notes-title">Notas rápidas</h2></div>
-            <span class="panel-symbol" aria-hidden="true">＋</span>
+            <button class="icon-button add-note-button" id="add-note" type="button" aria-label="Criar nota" title="Criar nota">＋</button>
           </div>
-          <div class="notes-grid">
-            <article class="note note-yellow"><span class="note-pin" aria-hidden="true"></span><h3>Lembrar!</h3><p>Entregar trabalho de história sexta-feira.</p><span class="note-mark" aria-hidden="true">✳</span></article>
-            <article class="note note-green"><span class="note-pin" aria-hidden="true"></span><h3>Ideia</h3><p>Criar mapa mental para a prova de biologia.</p><span class="note-mark" aria-hidden="true">✎</span></article>
-            <article class="note note-blue"><span class="note-pin" aria-hidden="true"></span><h3>Comprar</h3><p>Caderno novo e marcadores coloridos.</p><span class="note-mark" aria-hidden="true">□</span></article>
-          </div>
+          <div class="notes-grid" id="notes-grid" aria-live="polite"></div>
           <a class="text-link" href="#notas">Ver todas as notas <span aria-hidden="true">→</span></a>
         </section>
 
@@ -127,5 +124,25 @@
       <a class="mobile-nav-link" href="#notas"><span aria-hidden="true">▤</span>Notas</a>
       <a class="mobile-nav-link" href="#progresso"><span aria-hidden="true">◒</span>Progresso</a>
     </nav>
+
+    <dialog class="editor-dialog" id="task-dialog" aria-labelledby="task-dialog-title">
+      <form id="task-edit-form" method="dialog">
+        <h2 id="task-dialog-title">Editar tarefa</h2>
+        <label>Tarefa<input name="title" required maxlength="100"></label>
+        <label>Matéria ou detalhes<input name="details" maxlength="120"></label>
+        <label>Prazo<input name="due" type="date"></label>
+        <label>Prioridade<select name="priority"><option value="high">Alta</option><option value="medium">Média</option><option value="low">Baixa</option></select></label>
+        <div class="dialog-actions"><button class="secondary-button" value="cancel">Cancelar</button><button class="primary-button" type="submit" value="save">Salvar</button></div>
+      </form>
+    </dialog>
+    <dialog class="editor-dialog" id="note-dialog" aria-labelledby="note-dialog-title">
+      <form id="note-edit-form" method="dialog">
+        <h2 id="note-dialog-title">Nova nota</h2>
+        <label>Título<input name="title" required maxlength="60"></label>
+        <label>Anotação<textarea name="body" required rows="4" maxlength="300"></textarea></label>
+        <label>Cor<select name="color"><option value="yellow">Amarela</option><option value="green">Verde</option><option value="blue">Azul</option></select></label>
+        <div class="dialog-actions"><button class="secondary-button" value="cancel">Cancelar</button><button class="primary-button" type="submit" value="save">Salvar nota</button></div>
+      </form>
+    </dialog>
   </body>
 </html>

@@ -2,9 +2,11 @@
 
 Projeto final do curso WDD 330: um painel responsivo para organizar estudos, tarefas, agenda, notas e progresso.
 
-## Semana 5: Estrutura
+## Semana 6: Funções principais
 
-Esta etapa cria a estrutura visual do dashboard para desktop e mobile. Os dados são demonstrativos; tarefas, notas, calendário e integrações serão implementados nas próximas etapas.
+O dashboard responsivo funciona em desktop e mobile. Permite criar, editar, concluir, excluir e filtrar tarefas por situação e prioridade; criar, editar e excluir notas rápidas; e navegar entre semanas e dias da agenda, que inclui eventos de exemplo.
+
+Tarefas e notas ficam salvas no `localStorage` do navegador e permanecem disponíveis após recarregar a página no mesmo navegador. A agenda é demonstrativa e não sincroniza entre dispositivos.
 
 ## Executar localmente
 
