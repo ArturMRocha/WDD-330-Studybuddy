@@ -28,7 +28,8 @@
       </nav>
       <div class="profile">
         <span class="avatar" aria-hidden="true">AR</span>
-        <span class="profile-name">Ana Ribeiro</span>
+        <span class="profile-name" id="profile-name">Ana Ribeiro</span>
+        <button class="profile-auth-button" id="open-auth" type="button" aria-label="Entrar ou criar conta">Entrar</button>
         <span class="profile-chevron" aria-hidden="true">⌄</span>
       </div>
     </header>
@@ -45,8 +46,9 @@
       <section class="focus-banner" aria-label="Mensagem de incentivo">
         <div class="focus-copy">
           <p class="eyebrow">UM LEMBRETE PARA HOJE</p>
-          <blockquote>Disciplina hoje,<br>sucesso amanhã.</blockquote>
-          <p class="focus-caption">Continue. Seu eu do futuro vai agradecer.</p>
+          <blockquote id="quote-text" aria-live="polite">Grandes jornadas começam com pequenos passos.</blockquote>
+          <p class="focus-caption"><span id="quote-author">StudyBuddy</span><span aria-hidden="true"> · </span><span id="quote-status">Uma frase para acompanhar seus estudos.</span></p>
+          <a class="quote-attribution" href="https://zenquotes.io/" target="_blank" rel="noopener noreferrer">Frases por ZenQuotes</a>
         </div>
         <div class="focus-art" role="img" aria-label="Caderno aberto e lapis sobre uma mesa de estudos">
           <span class="art-sun" aria-hidden="true"></span>
@@ -66,9 +68,12 @@
           <form class="task-form" id="task-form" aria-label="Adicionar tarefa">
             <input id="task-title" name="title" placeholder="Nova tarefa" aria-label="Título da tarefa" required maxlength="100">
             <input id="task-details" name="details" placeholder="Matéria ou detalhes" aria-label="Matéria ou detalhes" maxlength="120">
-            <input id="task-due" name="due" type="date" aria-label="Prazo">
+            <input id="task-due" name="due" type="date" aria-label="Prazo ou data do exame">
             <select id="task-priority" name="priority" aria-label="Prioridade">
               <option value="high">Alta</option><option value="medium" selected>Média</option><option value="low">Baixa</option>
+            </select>
+            <select id="task-kind" name="kind" aria-label="Tipo de item">
+              <option value="deadline">Prazo</option><option value="exam">Exame</option>
             </select>
             <button class="primary-button" type="submit">Adicionar</button>
           </form>
@@ -87,6 +92,19 @@
           </div>
           <div class="week-strip" id="week-strip" aria-label="Dias da semana"></div>
           <div class="schedule" id="schedule" aria-live="polite"></div>
+          <div class="calendar-integrations">
+            <div class="calendar-actions"><button class="secondary-button" id="google-connect" type="button" disabled>Conectar Google Calendar</button><button class="secondary-button" id="google-refresh" type="button" hidden>Atualizar agenda</button><button class="secondary-button" id="google-disconnect" type="button" hidden>Desconectar</button></div>
+            <p class="integration-status" id="calendar-status" role="status">Agenda de demonstração ativa.</p>
+            <p class="integration-hint">Ao conectar, você autoriza a leitura e a criação de eventos de tarefas e exames.</p>
+            <div class="calendar-settings" id="google-settings">
+              <h3>Conectar sua agenda</h3>
+              <form id="google-config-form">
+                <label for="google-client-id">OAuth Client ID (Web)</label>
+                <div class="config-input-row"><input id="google-client-id" name="clientId" type="text" autocomplete="off" placeholder="...apps.googleusercontent.com" required pattern="[A-Za-z0-9.-]+\.apps\.googleusercontent\.com"><button class="secondary-button" type="submit">Salvar ID</button></div>
+              </form>
+              <p>O ID é salvo somente neste navegador. O token é mantido na sessão e não é persistido. Tarefas com prazo são sincronizadas como eventos.</p>
+            </div>
+          </div>
           <a class="text-link" href="#agenda">Abrir calendario <span aria-hidden="true">→</span></a>
         </section>
 
@@ -102,17 +120,12 @@
         <section id="progresso" class="panel" aria-labelledby="progress-title">
           <div class="panel-heading">
             <div><p class="eyebrow">CADA SESSÃO CONTA</p><h2 id="progress-title">Meu progresso</h2></div>
-            <span class="trend-badge">+15% <span aria-hidden="true">↗</span></span>
+            <span class="trend-badge" id="completed-count">0 tarefas concluídas</span>
           </div>
-          <div class="study-summary"><strong>12h 45min</strong><span>de estudo esta semana</span></div>
-          <div class="chart" role="img" aria-label="Tempo de estudo por dia: segunda 1 hora, terça 2 horas, quarta 1 hora e meia, quinta 2 horas e meia, sexta 3 horas, sábado 1 hora e meia, domingo 1 hora e quinze">
-            <div class="chart-column"><span style="--bar-height:32%"></span><small>Seg</small></div><div class="chart-column"><span style="--bar-height:55%"></span><small>Ter</small></div><div class="chart-column"><span style="--bar-height:44%"></span><small>Qua</small></div><div class="chart-column is-current"><span style="--bar-height:72%"></span><small>Qui</small></div><div class="chart-column"><span style="--bar-height:90%"></span><small>Sex</small></div><div class="chart-column"><span style="--bar-height:54%"></span><small>Sáb</small></div><div class="chart-column"><span style="--bar-height:40%"></span><small>Dom</small></div>
-          </div>
-          <div class="subject-progress">
-            <div class="subject-row"><span>Matematica</span><div class="progress-track"><span class="bar-math"></span></div><strong>75%</strong></div>
-            <div class="subject-row"><span>Ciencias</span><div class="progress-track"><span class="bar-science"></span></div><strong>60%</strong></div>
-            <div class="subject-row"><span>Historia</span><div class="progress-track"><span class="bar-history"></span></div><strong>40%</strong></div>
-          </div>
+          <div class="study-summary"><strong id="study-total">0 min</strong><span>de estudo esta semana</span></div>
+          <div class="chart" id="study-chart" role="img" aria-label="Tempo de estudo por dia nesta semana"></div>
+          <div class="subject-progress" id="subject-progress"></div>
+          <button class="secondary-button study-session-button" id="add-study-session" type="button">Registrar sessão</button>
         </section>
       </div>
     </main>
@@ -130,9 +143,10 @@
         <h2 id="task-dialog-title">Editar tarefa</h2>
         <label>Tarefa<input name="title" required maxlength="100"></label>
         <label>Matéria ou detalhes<input name="details" maxlength="120"></label>
-        <label>Prazo<input name="due" type="date"></label>
+        <label>Prazo ou data do exame<input name="due" type="date"></label>
         <label>Prioridade<select name="priority"><option value="high">Alta</option><option value="medium">Média</option><option value="low">Baixa</option></select></label>
-        <div class="dialog-actions"><button class="secondary-button" value="cancel">Cancelar</button><button class="primary-button" type="submit" value="save">Salvar</button></div>
+        <label>Tipo<select name="kind"><option value="deadline">Prazo</option><option value="exam">Exame</option></select></label>
+        <div class="dialog-actions"><button class="secondary-button" value="cancel" formnovalidate>Cancelar</button><button class="primary-button" type="submit" value="save">Salvar</button></div>
       </form>
     </dialog>
     <dialog class="editor-dialog" id="note-dialog" aria-labelledby="note-dialog-title">
@@ -141,7 +155,26 @@
         <label>Título<input name="title" required maxlength="60"></label>
         <label>Anotação<textarea name="body" required rows="4" maxlength="300"></textarea></label>
         <label>Cor<select name="color"><option value="yellow">Amarela</option><option value="green">Verde</option><option value="blue">Azul</option></select></label>
-        <div class="dialog-actions"><button class="secondary-button" value="cancel">Cancelar</button><button class="primary-button" type="submit" value="save">Salvar nota</button></div>
+        <div class="dialog-actions"><button class="secondary-button" value="cancel" formnovalidate>Cancelar</button><button class="primary-button" type="submit" value="save">Salvar nota</button></div>
+      </form>
+    </dialog>
+    <dialog class="editor-dialog" id="study-dialog" aria-labelledby="study-dialog-title">
+      <form id="study-session-form" method="dialog">
+        <h2 id="study-dialog-title">Registrar estudo</h2>
+        <label>Matéria<input name="subject" required maxlength="50" placeholder="Ex.: Biologia"></label>
+        <label>Duração em minutos<input name="minutes" type="number" min="1" max="600" step="1" value="25" required></label>
+        <div class="dialog-actions"><button class="secondary-button" value="cancel" formnovalidate>Cancelar</button><button class="primary-button" type="submit" value="save">Registrar</button></div>
+      </form>
+    </dialog>
+
+    <dialog class="editor-dialog auth-dialog" id="auth-dialog" aria-labelledby="auth-dialog-title">
+      <form id="auth-form" method="dialog">
+        <h2 id="auth-dialog-title">Entrar no StudyBuddy</h2>
+        <p id="auth-message" class="auth-message" role="status">Se ainda não tiver conta, crie uma.</p>
+        <label>Nome de usuário<input id="auth-username" name="username" autocomplete="username" required minlength="3" maxlength="40"></label>
+        <label>Senha<input id="auth-password" name="password" type="password" autocomplete="current-password" required minlength="6" maxlength="120"></label>
+        <button class="text-link auth-mode-toggle" id="auth-mode-toggle" type="button">Não tenho conta. Criar uma.</button>
+        <div class="dialog-actions"><button class="secondary-button" id="auth-cancel" type="button">Cancelar</button><button class="primary-button" id="auth-submit" type="submit">Entrar</button></div>
       </form>
     </dialog>
   </body>

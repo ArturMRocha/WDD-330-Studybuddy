@@ -46,10 +46,11 @@ h1 span { color: var(--yellow); font-size: 21px; }
 .focus-banner::before, .focus-banner::after { position: absolute; width: 210px; height: 210px; border: 1px solid rgb(78 142 164 / 12%); border-radius: 50%; content: ""; }
 .focus-banner::before { top: -145px; right: 220px; }
 .focus-banner::after { right: 180px; bottom: -172px; }
-.focus-copy { position: relative; z-index: 1; }
+.focus-copy { position: relative; z-index: 1; max-width: min(100%, 750px); }
 .focus-copy .eyebrow { color: #4a8397; }
-.focus-copy blockquote { margin-bottom: 7px; color: #27495a; font-size: 30px; font-weight: 700; line-height: 1.18; }
+.focus-copy blockquote { max-width: 720px; margin-bottom: 7px; overflow-wrap: anywhere; color: #27495a; font-size: 30px; font-weight: 700; line-height: 1.18; }
 .focus-caption { margin: 0; color: #627b85; font-size: 13px; }
+.quote-attribution { display: inline-block; margin-top: 4px; color: #397e78; font-size: 10px; text-decoration: underline; text-underline-offset: 2px; }
 .focus-art { position: relative; width: 265px; height: 140px; flex: 0 0 265px; }
 .art-sun { position: absolute; top: 11px; right: 55px; width: 42px; height: 42px; border: 1px solid #e7c564; border-radius: 50%; background: #f9e7a9; }
 .art-book { position: absolute; z-index: 1; top: 48px; left: 38px; display: flex; width: 112px; height: 67px; transform: rotate(-7deg); filter: drop-shadow(0 8px 5px rgb(58 87 85 / 12%)); }
@@ -113,6 +114,20 @@ h2 { margin-bottom: 0; font-size: 17px; font-weight: 600; }
 .event-blue { border-color: #5d9eb8; background: #edf6f8; }
 .event-green { border-color: #68a77d; background: #eef6ef; }
 .event-yellow { border-color: #d8ad4d; background: #fbf6e9; }
+.event-description { overflow-wrap: anywhere; white-space: pre-line; }
+.calendar-integrations { display: grid; gap: 5px; margin: 0 0 13px; padding-top: 10px; border-top: 1px solid #edf1ef; }
+.calendar-actions { display: flex; flex-wrap: wrap; gap: 7px; }
+.calendar-actions .secondary-button { min-height: 30px; }
+.calendar-actions .secondary-button:disabled { cursor: not-allowed; opacity: .58; }
+.integration-status { margin: 0; color: #77868a; font-size: 10px; }
+.integration-hint { margin: 0; color: #849196; font-size: 10px; }
+.calendar-settings { color: #5f7378; font-size: 10px; }
+.calendar-settings summary { width: fit-content; color: #347b98; cursor: pointer; font-weight: 600; }
+.calendar-settings form { display: grid; gap: 5px; margin: 8px 0 5px; }
+.calendar-settings label { font-weight: 600; }
+.config-input-row { display: flex; gap: 6px; }
+.config-input-row input { width: min(100%, 340px); min-width: 0; min-height: 32px; padding: 6px 8px; border: 1px solid #e2e9e4; border-radius: 4px; font: inherit; }
+.calendar-settings p { max-width: 440px; margin: 0; color: #849196; font-size: 10px; }
 .panel-symbol { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid #dcebe1; border-radius: 6px; color: #4d9270; font-size: 20px; }
 .notes-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 15px; }
 .note { position: relative; display: flex; min-height: 128px; flex-direction: column; padding: 16px 12px 12px; border: 1px solid rgb(70 90 75 / 7%); border-radius: 5px; box-shadow: 0 5px 10px rgb(48 68 56 / 7%); transform: rotate(-1deg); }
@@ -132,6 +147,8 @@ h2 { margin-bottom: 0; font-size: 17px; font-weight: 600; }
 .editor-dialog label { display: grid; gap: 5px; color: #617278; font-size: 11px; font-weight: 600; }
 .editor-dialog input, .editor-dialog textarea, .editor-dialog select { width: 100%; font-size: 13px; }
 .editor-dialog textarea { resize: vertical; }
+.auth-message { margin-bottom: 0; color: #79898e; font-size: 11px; }
+.auth-mode-toggle { justify-self: start; padding: 0; border: 0; background: transparent; cursor: pointer; }
 .dialog-actions { display: flex; justify-content: end; gap: 8px; margin-top: 4px; }
 .trend-badge { background: #e9f4e9; color: #4f8a5e; }
 .study-summary { display: flex; align-items: baseline; gap: 8px; margin: -3px 0 14px; }
@@ -145,6 +162,7 @@ h2 { margin-bottom: 0; font-size: 17px; font-weight: 600; }
 .subject-progress { display: grid; gap: 10px; margin-top: 14px; }
 .subject-row { display: grid; grid-template-columns: 76px minmax(0, 1fr) 28px; align-items: center; gap: 9px; color: #66777c; font-size: 10px; }
 .subject-row strong { color: #607276; font-size: 10px; text-align: right; }
+.study-session-button { margin-top: 13px; }
 .progress-track { height: 6px; overflow: hidden; border-radius: 10px; background: #edf1ef; }
 .progress-track span { display: block; height: 100%; border-radius: inherit; }
 .bar-math { width: 75%; background: #5d9eb8; } .bar-science { width: 60%; background: #71a77c; } .bar-history { width: 40%; background: #e0b65b; }
@@ -184,7 +202,8 @@ h2 { margin-bottom: 0; font-size: 17px; font-weight: 600; }
   .focus-banner { min-height: 166px; margin-bottom: 15px; padding: 22px 20px; }
   .focus-copy blockquote { font-size: 24px; }
   .focus-caption { max-width: 215px; font-size: 11px; }
-  .focus-art { position: absolute; right: -48px; bottom: 0; width: 185px; height: 125px; transform: scale(.75); transform-origin: bottom left; opacity: .78; }
+  .focus-copy { max-width: calc(100% - 14px); }
+  .focus-art { position: absolute; right: -48px; bottom: 0; width: 185px; height: 125px; transform: scale(.75); transform-origin: bottom left; opacity: .16; }
   .dashboard-grid { grid-template-columns: minmax(0, 1fr); gap: 13px; }
   .panel { padding: 19px 17px; }
   .task-row { grid-template-columns: 18px minmax(0, 1fr) auto; min-height: 58px; }
@@ -192,6 +211,7 @@ h2 { margin-bottom: 0; font-size: 17px; font-weight: 600; }
   .task-row { position: relative; padding: 7px 0 29px; }
   .task-actions { position: absolute; right: 0; bottom: 1px; }
   .calendar-heading { align-items: start; }
+  .calendar-controls { max-width: 52%; }
   .week-strip { gap: 3px; }
   .schedule-row { grid-template-columns: 42px 8px minmax(0, 1fr); gap: 7px; }
   .notes-grid { gap: 8px; }
@@ -204,13 +224,14 @@ h2 { margin-bottom: 0; font-size: 17px; font-weight: 600; }
 
 @media (max-width: 380px) {
   .page-shell { width: calc(100% - 24px); }
+  .calendar-heading { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .focus-banner { padding-right: 13px; padding-left: 15px; }
   .focus-copy blockquote { font-size: 21px; }
   .task-copy strong { font-size: 11px; }
   .priority { padding-right: 5px; padding-left: 5px; }
   .note p { font-size: 9px; }
-  .calendar-controls { gap: 2px; }
-  .calendar-controls .month-label { font-size: 10px; }
+  .calendar-controls { max-width: 100%; gap: 1px; justify-self: start; }
+  .calendar-controls .month-label { font-size: 9px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
